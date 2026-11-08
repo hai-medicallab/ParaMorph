@@ -1,0 +1,7 @@
+dataset,method,seed,path
+LPBA40,TransMorph,47,../results/transmorph_seed47/per_case_metrics.csv
+LPBA40,TransMorph,726,../results/transmorph_seed726/per_case_metrics.csv
+LPBA40,TransMorph,2026,../results/transmorph_seed2026/per_case_metrics.csv
+LPBA40,ParaMorph,47,../results/paramorph_seed47/per_case_metrics.csv
+LPBA40,ParaMorph,726,../results/paramorph_seed726/per_case_metrics.csv
+LPBA40,ParaMorph,2026,../results/paramorph_seed2026/per_case_metrics.csv

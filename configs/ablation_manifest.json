@@ -1,0 +1,69 @@
+{
+  "scope": "Implementation map for the component-isolation rows in manuscript Tables 6 and 7",
+  "note": "The exact legacy model sources used for these experiments are preserved under legacy_ablations/. The mapping describes the active forward path; commented experimental alternatives are not part of the reported configuration.",
+  "baseline": "TransMorph",
+  "variants": {
+    "transformer_encoder_only": {
+      "model_source": "legacy_ablations/models/TransMorph.py",
+      "transformer_encoder": true,
+      "convnet_encoder": false,
+      "gf": false,
+      "pmfe": false,
+      "active_decoder_inputs": "Deepest Transformer feature, three Transformer skip features, and the two original shallow TransMorph convolutional skip features."
+    },
+    "convnet_encoder_only": {
+      "model_source": "models/convnet_only.py",
+      "training_entry": "train_paramorph.py --model convnet-only",
+      "testing_entry": "test_paramorph.py --model convnet-only",
+      "transformer_encoder": false,
+      "convnet_encoder": true,
+      "gf": false,
+      "pmfe": false,
+      "configuration_note": "The Transformer module is removed from the model and its checkpoint. The six ConvNet resolutions are connected directly to the common decoder and registration head."
+    },
+    "combined_encoders_no_gf_pmfe": {
+      "model_source": "legacy_ablations/models/swin_conv_fusion_ab_cov1.py",
+      "training_entry": "legacy_ablations/train_TransMorph_fusioncov1.py",
+      "transformer_encoder": true,
+      "convnet_encoder": true,
+      "gf": false,
+      "pmfe": false,
+      "fusion": "Parameter-free element-wise addition of resolution-matched Transformer and ConvNet feature maps at four scales.",
+      "active_decoder_inputs": "The four summed feature maps, followed by the two original shallow TransMorph convolutional skip features."
+    },
+    "baseline_plus_gf": {
+      "model_source": "legacy_ablations/models/TransMorph_gap.py",
+      "training_entry": "legacy_ablations/train_TransMorph_gap.py",
+      "transformer_encoder": true,
+      "convnet_encoder": false,
+      "gf": true,
+      "pmfe": false,
+      "gf_inputs": "The three Transformer skip features f1, f2, and f3 are refined separately by residual 3D convolutional blocks before decoding. The deepest Transformer feature and the two original shallow convolutional skips are retained without this refinement."
+    },
+    "baseline_plus_pmfe": {
+      "model_source": "legacy_ablations/models/swin_conv_fusion.py",
+      "transformer_encoder": true,
+      "convnet_encoder": true,
+      "gf": false,
+      "pmfe": true,
+      "fusion": "Resolution-matched Transformer and ConvNet features are combined by element-wise addition at four scales before the common decoder."
+    },
+    "paramorph": {
+      "model_source": "legacy_ablations/models/swin_conv_fusion_cov3_gap.py",
+      "training_entry": "legacy_ablations/train_TransMorph_fusioncov3.py",
+      "transformer_encoder": true,
+      "convnet_encoder": true,
+      "gf": true,
+      "pmfe": true
+    },
+    "paramorph_c": {
+      "model_source": "legacy_ablations/models/swin_conv_mixed_gap.py",
+      "training_entry": "legacy_ablations/train_TransMorph_mixedgap.py",
+      "transformer_encoder": true,
+      "convnet_encoder": true,
+      "gf": true,
+      "pmfe": true,
+      "cross_pathway_interaction": true
+    }
+  }
+}
